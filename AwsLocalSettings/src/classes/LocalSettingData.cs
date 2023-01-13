@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace AwsLocalSettings
 {
-	public class LocalSettingData
+	public class LocalSettingData : INotifyPropertyChanged
 	{
 		public class Employee 
 		{
@@ -24,7 +24,7 @@ namespace AwsLocalSettings
 				set
 				{
 					name = value;
-					OnPropertyChanged("Name");
+					OnPropertyChanged(nameof(Name));
 				}
 			}
 
@@ -35,7 +35,7 @@ namespace AwsLocalSettings
 				set
 				{
 					operationType = value;
-					OnPropertyChanged("OperationType");
+					OnPropertyChanged(nameof(OperationType));
 				}
 			}
 
@@ -47,7 +47,7 @@ namespace AwsLocalSettings
                 set
                 {
                     connectionInfo = value;
-					OnPropertyChanged("ConnectionInfo");
+					OnPropertyChanged(nameof(ConnectionInfo));
                 }
             }
 
@@ -60,18 +60,18 @@ namespace AwsLocalSettings
 				set
 				{
 					connectionType = value;
-					OnPropertyChanged("ConnectionType");
+					OnPropertyChanged(nameof(ConnectionType));
 				}
 			}
 
 			private bool enabled;
-			public bool Enabled 
+			public bool Enabled
 			{
 				get { return enabled; }
 				set
 				{
 					enabled = value;
-					OnPropertyChanged("Enabled");
+					OnPropertyChanged(nameof(Enabled));
 				}
 			}
 
@@ -91,8 +91,16 @@ namespace AwsLocalSettings
 					PropertyChanged(this, new PropertyChangedEventArgs(prop));
 			}
 		}
-
-		public List<WorkstationInfo> Workstation { get; set; }
+        private List<WorkstationInfo> workstation;
+		public List<WorkstationInfo> Workstation
+        {
+            get { return workstation; }
+            set
+            {
+                workstation = Workstation;
+                OnPropertyChanged(nameof(Workstation));
+            }
+        }
 
 		public void ShowSettingPanel()
 		{
@@ -115,21 +123,31 @@ namespace AwsLocalSettings
 					Enabled = false,
 				});
 
-				form.DgWorkstation.ItemsSource = null;
-				form.DgWorkstation.ItemsSource = Workstation;
+                OnPropertyChanged(nameof(Workstation));
+                // FIX
+				//form.DgWorkstation.ItemsSource = null;
+				//form.DgWorkstation.ItemsSource = Workstation;
 			};
 
 			form.BtnDelWorkstation.Click += (s, e) =>
 			{
 			};
 
-			form.DgWorkstation.ItemsSource = Workstation;
+            // FIX
+			//form.DgWorkstation.ItemsSource = Workstation;
 			form.ShowDialog();
 		}
 
 		public LocalSettingData(string store_path)
 		{
-			Workstation = new List<WorkstationInfo>();
+			workstation = new List<WorkstationInfo>();
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public void OnPropertyChanged([CallerMemberName] string prop = "")
+		{
+			if (PropertyChanged != null)
+				PropertyChanged(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

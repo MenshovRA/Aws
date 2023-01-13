@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,7 +56,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="src\classes\Guide.cs" />
+    <Compile Include="..\SerialPortsRegInfo\src\classes\SerialPortsRegInfo.cs">
+      <Link>src\reference\SerialPortsRegInfo.cs</Link>
+    </Compile>
+    <Compile Include="src\classes\LocalSettingVm.cs" />
+    <Compile Include="src\classes\Types.cs" />
     <Compile Include="src\classes\LocalSettingData.cs" />
     <Compile Include="src\panels\LocalSettingWindow.xaml.cs">
       <DependentUpon>LocalSettingWindow.xaml</DependentUpon>

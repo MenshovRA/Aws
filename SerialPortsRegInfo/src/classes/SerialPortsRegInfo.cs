@@ -6,39 +6,39 @@ using System.Management;
 
 namespace SerialPortsRegInfo
 {
-	public class SerialPortsRegInfo
-	{
-		public struct PortInfo
-		{
-			public string Name;
-			public string DeviceID;
-			public string Caption;
-		}
+    public class SerialPortsRegInfo
+    {
+        public class PortInfo
+        {
+            public string Name;
+            public string DeviceID;
+            public string Caption;
+        }
 
-		public List<PortInfo> Items;
+        public List<PortInfo> Items;
 
-		public void RefreshInfo()
-		{
+        public void RefreshInfo()
+        {
 
-			var searcher = new ManagementObjectSearcher("SELECT * FROM WIN32_SerialPort");
-			var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
+            var searcher = new ManagementObjectSearcher("SELECT * FROM WIN32_SerialPort");
+            var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
 
-			Items.Clear();
-			foreach (var p in ports)
-			{
-				var info = new PortInfo();
-				info.Caption = p.GetPropertyValue("Caption").ToString();
-				info.Name = p.GetPropertyValue("DeviceID").ToString();
-				info.DeviceID = p.GetPropertyValue("PNPDeviceID").ToString();
+            Items.Clear();
+            foreach (var p in ports)
+            {
+                var info = new PortInfo();
+                info.Caption = p.GetPropertyValue("Caption").ToString();
+                info.Name = p.GetPropertyValue("DeviceID").ToString();
+                info.DeviceID = p.GetPropertyValue("PNPDeviceID").ToString();
 
-				Items.Add(info);
-			}
-		}
+                Items.Add(info);
+            }
+        }
 
-		public SerialPortsRegInfo()
-		{
-			Items = new List<PortInfo>();
-			RefreshInfo();
-		}
-	}
+        public SerialPortsRegInfo()
+        {
+            Items = new List<PortInfo>();
+            RefreshInfo();
+        }
+    }
 }

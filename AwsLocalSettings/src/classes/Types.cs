@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+//using SerialPortsRegInfo;
 
 namespace AwsLocalSettings
 {
@@ -18,8 +19,12 @@ namespace AwsLocalSettings
     /// </summary>
     public class ConnectionInfoCOM
     {
-        public string Name;
-        public string DeviceId;
+        public SerialPortsRegInfo.SerialPortsRegInfo.PortInfo Info;
+
+        public ConnectionInfoCOM()
+        {
+            Info = new SerialPortsRegInfo.SerialPortsRegInfo.PortInfo();
+        }
     }
 
     /// <summary>

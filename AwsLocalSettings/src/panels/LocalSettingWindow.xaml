@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:local="clr-namespace:AwsLocalSettings"
+        xmlns:viewModel="clr-namespace:AwsLocalSettings"
+        d:DataContext="{d:DesignInstance viewModel:LocalSettingViewModel}"
         mc:Ignorable="d"
         Title="Локальные настройки"
         Height="450" Width="800"
@@ -13,20 +14,20 @@
     <Window.Resources>
         <ObjectDataProvider x:Key="TypeConnectionEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type Type="local:ConnectionType"/>
+                <x:Type Type="viewModel:ConnectionType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ObjectDataProvider x:Key="OperationName" MethodName="GetData" ObjectType="{x:Type local:OperationType}"/>
+        <ObjectDataProvider x:Key="OperationName" MethodName="GetData" ObjectType="{x:Type viewModel:OperationType}"/>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="LightCyan">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Background="LightCyan">
+        <DockPanel Grid.Row="0" Background="LightCyan" Margin="3">
             <TabControl Margin="0,5,0,0">
                 <TabItem Header="Рабочие места" Height="Auto">
                     <Grid>
@@ -36,19 +37,21 @@
                         </Grid.RowDefinitions>
 
                         <DockPanel Grid.Row="0">
-                            <DataGrid Name="DgWorkstation" AutoGenerateColumns="False" Margin="7,8,7,6" CanUserAddRows="False">
+                            <DataGrid Name="DgWorkstation" AutoGenerateColumns="False" Margin="7,8,7,6" CanUserAddRows="False"
+                                    SelectionMode="Single"
+                                    HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding LocalSetting.Workstation, UpdateSourceTrigger=PropertyChanged}">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Width="50" Header="Исп." Binding="{Binding Enabled}"/>
                                     <DataGridTextColumn Width="175" Header="Наименование" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridComboBoxColumn Width="125" Header="Операция" DisplayMemberPath="Name" SelectedItemBinding="{Binding Info}" ItemsSource="{Binding Source={StaticResource OperationName}}"/>
                                     <!--<DataGridComboBoxColumn Width="125" Header="Тип подключения" SelectedItemBinding="{Binding ConnectionType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>-->
                                     <DataGridComboBoxColumn Width="125" Header="Тип подключения"                                                            
-                                                            SelectedItemBinding="{Binding ConnectionInfo.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                            ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>
+                                                    SelectedItemBinding="{Binding ConnectionInfo.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>
 
                                     <DataGridTextColumn Width="125" Header="Данные для COM"/>
                                     <DataGridTextColumn Width="125" Header="Данные для TCP"/>
-                                    <DataGridTextColumn Width="*" Header="Сотрудники"/>
+                                    <DataGridTextColumn Width="250" Header="Сотрудники"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
@@ -61,7 +64,7 @@
                 </TabItem>
             </TabControl>
         </DockPanel>
-        
+
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="BtnApply" Width="105" Height="25" Content="Применить" Margin="0,0,25,0"/>
             <Button Name="BtnCancel" Width="105" Height="25" Content="Отмена" Margin="0,0,25,0"/>
