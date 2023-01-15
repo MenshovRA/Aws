@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -24,8 +25,8 @@ namespace AwsLocalSettings
 				set
 				{
 					name = value;
-					OnPropertyChanged(nameof(Name));
-				}
+                    OnPropertyChanged(nameof(Name));
+                }
 			}
 
 			private OperationType.Info operationType;
@@ -144,10 +145,10 @@ namespace AwsLocalSettings
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
+		public void OnPropertyChanged([CallerMemberName] string propName = null)
 		{
 			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
+				PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
 	}
 }

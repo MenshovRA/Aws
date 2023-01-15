@@ -39,7 +39,7 @@
                         <DockPanel Grid.Row="0">
                             <DataGrid Name="DgWorkstation" AutoGenerateColumns="False" Margin="7,8,7,6" CanUserAddRows="False"
                                     SelectionMode="Single"
-                                    HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding LocalSetting.Workstation, UpdateSourceTrigger=PropertyChanged}">
+                                    HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding LocalSetting.Workstation}">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Width="50" Header="Исп." Binding="{Binding Enabled}"/>
                                     <DataGridTextColumn Width="175" Header="Наименование" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
