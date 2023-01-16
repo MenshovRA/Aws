@@ -10,6 +10,7 @@ namespace AwsLocalSettings
         public void AddWorkstation()
         {
             // TODO: доработать
+            LocalSetting.AddWorkstation();
         }
 
         public ICommand ClickAdd

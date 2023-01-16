@@ -79,6 +79,7 @@ namespace AwsLocalSettings
             // TODO:
 			public List<Employee> Emple;
 
+
 			public WorkstationInfo()
 			{
 				Emple = new List<Employee>();
@@ -92,6 +93,7 @@ namespace AwsLocalSettings
 					PropertyChanged(this, new PropertyChangedEventArgs(prop));
 			}
 		}
+
         private ObservableCollection<WorkstationInfo> workstation;
 		public ObservableCollection<WorkstationInfo> Workstation
         {
@@ -102,6 +104,18 @@ namespace AwsLocalSettings
                 OnPropertyChanged(nameof(Workstation));
             }
         }
+
+		public void AddWorkstation()
+		{
+			workstation.Add(new WorkstationInfo()
+			{
+				Name = string.Format("Рабочее место №{0:D}", workstation.Count + 1),
+				OperationType = OperationType.GetData()[0],
+				ConnectionType = ConnectionType.SERIAL,
+				Enabled = false,
+			});
+		}
+
 
 		public void ShowSettingPanel()
 		{
@@ -114,22 +128,22 @@ namespace AwsLocalSettings
 
 			form.BtnCancel.Click += (s, e) => form.Close();
 
-			form.BtnAddWorkstation.Click += (s, e) =>
-			{
-				Workstation.Add(new WorkstationInfo()
-				{
-					Name = string.Format("Рабочее место №{0:D}", Workstation.Count + 1),
-					OperationType = OperationType.GetData()[0],
-					ConnectionType = ConnectionType.SERIAL,
-					Enabled = false,
-				});
+			//form.BtnAddWorkstation.Click += (s, e) =>
+			//{
+			//	Workstation.Add(new WorkstationInfo()
+			//	{
+			//		Name = string.Format("Рабочее место №{0:D}", Workstation.Count + 1),
+			//		OperationType = OperationType.GetData()[0],
+			//		ConnectionType = ConnectionType.SERIAL,
+			//		Enabled = false,
+			//	});
 
-                OnPropertyChanged(nameof(Workstation));
+   //             OnPropertyChanged(nameof(Workstation));
 
-                // FIX
-                //form.DgWorkstation.ItemsSource = null;
-                //form.DgWorkstation.ItemsSource = Workstation;
-            };
+   //             // FIX
+   //             //form.DgWorkstation.ItemsSource = null;
+   //             //form.DgWorkstation.ItemsSource = Workstation;
+   //         };
 
 			form.BtnDelWorkstation.Click += (s, e) =>
 			{
