@@ -21,6 +21,10 @@
         <ObjectDataProvider x:Key="OperationName" MethodName="GetData" ObjectType="{x:Type viewModel:OperationType}"/>
     </Window.Resources>
 
+    <Window.DataContext>
+        <viewModel:LocalSettingViewModel />
+    </Window.DataContext>
+    
     <Grid Background="LightCyan">
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
@@ -41,12 +45,12 @@
                                     SelectionMode="Single"
                                     HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding LocalSetting.Workstation}">
                                 <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Width="50" Header="Исп." Binding="{Binding Enabled}"/>
-                                    <DataGridTextColumn Width="175" Header="Наименование" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridComboBoxColumn Width="125" Header="Операция" DisplayMemberPath="Name" SelectedItemBinding="{Binding Info}" ItemsSource="{Binding Source={StaticResource OperationName}}"/>
+                                    <DataGridCheckBoxColumn Width="50" Header="Исп." Binding="{Binding LocalSetting.Workstation.Enabled, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn Width="175" Header="Наименование" Binding="{Binding LocalSetting.Workstation.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridComboBoxColumn Width="125" Header="Операция" DisplayMemberPath="Name" SelectedItemBinding="{Binding LocalSetting.Workstation.Info, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource OperationName}}"/>
                                     <!--<DataGridComboBoxColumn Width="125" Header="Тип подключения" SelectedItemBinding="{Binding ConnectionType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>-->
                                     <DataGridComboBoxColumn Width="125" Header="Тип подключения"                                                            
-                                                    SelectedItemBinding="{Binding ConnectionInfo.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectedItemBinding="{Binding LocalSetting.Workstation.ConnectionInfo.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>
 
                                     <DataGridTextColumn Width="125" Header="Данные для COM"/>

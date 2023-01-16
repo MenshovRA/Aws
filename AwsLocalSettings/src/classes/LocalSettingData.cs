@@ -92,13 +92,13 @@ namespace AwsLocalSettings
 					PropertyChanged(this, new PropertyChangedEventArgs(prop));
 			}
 		}
-        private List<WorkstationInfo> workstation;
-		public List<WorkstationInfo> Workstation
+        private ObservableCollection<WorkstationInfo> workstation;
+		public ObservableCollection<WorkstationInfo> Workstation
         {
             get { return workstation; }
             set
             {
-                workstation = Workstation;
+                workstation = value;
                 OnPropertyChanged(nameof(Workstation));
             }
         }
@@ -125,10 +125,11 @@ namespace AwsLocalSettings
 				});
 
                 OnPropertyChanged(nameof(Workstation));
+
                 // FIX
-				//form.DgWorkstation.ItemsSource = null;
-				//form.DgWorkstation.ItemsSource = Workstation;
-			};
+                //form.DgWorkstation.ItemsSource = null;
+                //form.DgWorkstation.ItemsSource = Workstation;
+            };
 
 			form.BtnDelWorkstation.Click += (s, e) =>
 			{
@@ -141,11 +142,11 @@ namespace AwsLocalSettings
 
 		public LocalSettingData(string store_path)
 		{
-			workstation = new List<WorkstationInfo>();
+			workstation = new ObservableCollection<WorkstationInfo>();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-		public void OnPropertyChanged([CallerMemberName] string propName = null)
+		public void OnPropertyChanged([CallerMemberName] string propName = "")
 		{
 			if (PropertyChanged != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(propName));

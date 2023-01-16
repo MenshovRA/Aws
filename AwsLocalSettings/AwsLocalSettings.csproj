@@ -59,6 +59,7 @@
     <Compile Include="..\SerialPortsRegInfo\src\classes\SerialPortsRegInfo.cs">
       <Link>src\reference\SerialPortsRegInfo.cs</Link>
     </Compile>
+    <Compile Include="src\classes\DelegateCommand.cs" />
     <Compile Include="src\classes\LocalSettingVm.cs" />
     <Compile Include="src\classes\Types.cs" />
     <Compile Include="src\classes\LocalSettingData.cs" />
