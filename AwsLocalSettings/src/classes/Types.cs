@@ -65,7 +65,7 @@ namespace AwsLocalSettings
 				set
 				{
 					name = value;
-					OnPropertyChanged("Name");
+					OnPropertyChanged(nameof(Name));
 				}
 			}
 
@@ -76,7 +76,7 @@ namespace AwsLocalSettings
 				set
 				{
 					code = value;
-					OnPropertyChanged("Code");
+					OnPropertyChanged(nameof(Code));
 				}
 			}
 
@@ -93,6 +93,11 @@ namespace AwsLocalSettings
 			new Info() { Name = "Вафельница", Code = 111 },
 			new Info() { Name = "Сборка", Code = 222 },
 		};
+
+        public static List<Info> Data
+        {
+            get { return data; }
+        }
 
 		public static List<Info> GetData()
 		{

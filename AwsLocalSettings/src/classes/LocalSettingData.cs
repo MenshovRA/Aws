@@ -110,9 +110,9 @@ namespace AwsLocalSettings
 			workstation.Add(new WorkstationInfo()
 			{
 				Name = string.Format("Рабочее место №{0:D}", workstation.Count + 1),
-				OperationType = OperationType.GetData()[0],
+				OperationType = OperationType.Data[0],
 				ConnectionType = ConnectionType.SERIAL,
-				Enabled = false,
+				Enabled = true,
 			});
 		}
 

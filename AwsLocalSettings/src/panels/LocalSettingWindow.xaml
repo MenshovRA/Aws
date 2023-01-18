@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:viewModel="clr-namespace:AwsLocalSettings"
-        d:DataContext="{d:DesignInstance viewModel:LocalSettingViewModel}"
+        xmlns:vm="clr-namespace:AwsLocalSettings"
+        d:DataContext="{d:DesignInstance vm:LocalSettingViewModel}"
         mc:Ignorable="d"
         Title="Локальные настройки"
         Height="450" Width="800"
@@ -14,15 +14,15 @@
     <Window.Resources>
         <ObjectDataProvider x:Key="TypeConnectionEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type Type="viewModel:ConnectionType"/>
+                <x:Type Type="vm:ConnectionType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ObjectDataProvider x:Key="OperationName" MethodName="GetData" ObjectType="{x:Type viewModel:OperationType}"/>
+        <ObjectDataProvider x:Key="Operation" MethodName="GetData" ObjectType="{x:Type vm:OperationType}"/>
     </Window.Resources>
 
     <Window.DataContext>
-        <viewModel:LocalSettingViewModel />
+        <vm:LocalSettingViewModel />
     </Window.DataContext>
     
     <Grid Background="LightCyan">
@@ -45,16 +45,33 @@
                                     SelectionMode="Single"
                                     HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Path=LocalSetting.Workstation}">
                                 <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn Width="50" Header="Исп." Binding="{Binding Path=Enabled, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridTextColumn Width="175" Header="Наименование" Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridComboBoxColumn Width="125" Header="Операция" DisplayMemberPath="Name" SelectedItemBinding="{Binding Path=Info, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource OperationName}}"/>
+                                    <DataGridCheckBoxColumn
+                                        Width="50" 
+                                        Header="Исп." 
+                                        Binding="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    
+                                    <DataGridTextColumn
+                                        Width="175"
+                                        Header="Наименование"
+                                        Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <DataGridComboBoxColumn 
+                                        Width="125" 
+                                        Header="Операция"
+                                        DisplayMemberPath="Name"
+                                        ItemsSource="{Binding Source={StaticResource Operation}}"
+                                        SelectedItemBinding="{Binding Path=OperationType}"/>
+
+
                                     <!--<DataGridComboBoxColumn Width="125" Header="Тип подключения" SelectedItemBinding="{Binding ConnectionType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>-->
                                     <DataGridComboBoxColumn Width="125" Header="Тип подключения"                                                            
                                                     SelectedItemBinding="{Binding Path=Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ItemsSource="{Binding Source={StaticResource TypeConnectionEnum}}"/>
 
                                     <DataGridTextColumn Width="125" Header="Данные для COM"/>
+                                    
                                     <DataGridTextColumn Width="125" Header="Данные для TCP"/>
+                                    
                                     <DataGridTextColumn Width="250" Header="Сотрудники"/>
                                 </DataGrid.Columns>
                             </DataGrid>
